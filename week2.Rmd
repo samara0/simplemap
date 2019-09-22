@@ -86,10 +86,4 @@ mymap
 
 ```
 
-***
 
-Next Slide 
-
-<p>Bla bla </p>
-
-<p style="color:red"> $Y = \beta_0 + \beta_1 X + \varepsilon$ </p>
