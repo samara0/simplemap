@@ -1,0 +1,95 @@
+---
+title: "ASU Map"
+date: "9/22/2019"
+logo: ./week2_files/asu-logo.png
+output: ioslides_presentation
+---
+
+<style>
+.gdbar img {
+  width: 300px !important;
+  height: 150px !important;
+  margin: 8px 8px;
+}
+
+.gdbar {
+  width: 400px !important;
+  height: 170px !important;
+}
+
+</style>
+
+<style type="text/css">
+body p, div, h1, h2, h3, h4, h5 {
+  color: black;
+  font-family: Modern Computer Roman;
+}
+h2 {
+color: #8C1D40;
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, comment = "")
+```
+
+```{r}
+library(magrittr)
+library(leaflet)
+```
+
+
+## ASU (Tempe) and Cities in Phoenix Metropolitan Area
+
+```{r}
+asuicon = makeIcon(iconUrl="./week2_files/asu-logo.png",
+                   iconWidth=31*215/80, iconHeight=60,
+                   iconAnchorX = 31*215/230/2, iconAnchorY=16)
+
+anglerIcon <- makeIcon(
+   iconUrl = "./week2_files/people.svg",
+   iconWidth = 30, iconHeight = 30,
+   iconAnchorX = 22, iconAnchorY = 40,
+   shadowUrl = "http://leafletjs.com/examples/custom-icons/leaf-shadow.png",
+   shadowWidth = 20, shadowHeight = 30,
+   shadowAnchorX = -4, shadowAnchorY = 22)
+
+asulinks = c("<a href='https://sols.asu.edu'>Life Sciences Tower - E Wing (LSE) <br> School of Life Sciences </a>",
+             "<a href='https://engineering.asu.edu'> Brickyard Engineering (BYENG) <br> Ira Fulton School of Engineering </a>",
+             "<a href='https://physics.asu.edu'>Physical Sciences Building - F Wing (PSF) <br> Department of Physics  </a>",
+             "<a href='https://math.asu.edu'> Wexler Hall (WXLR) <br> School of Math & Stats Sciences</a>",
+             "<a href='https://barretthonors.asu.edu'> Honors Hall (HONHALL)  <br> Barrett Honors College</a>")
+lat.lng.df = data.frame(lat=c(33.419493,33.423508, 33.420864, 33.420638, 33.415757), lng=c(-111.933794,-111.939567, -111.931525, -111.932002, -111.927700))
+ 
+cities = data.frame(name = c("Mesa", "Gilbert", "Tempe", "Chandler", "Glendale", "Scottsdale"),
+                    population = c(496401, 242354, 185038, 253458, 203054, 249950),
+                    lat = c(33.42227, 33.349372, 33.424676, 33.303869, 33.538324, 33.493989),
+                    lng = c(-111.82264,  -111.790811, -111.938309, -111.844266, -112.186124, -111.926126))
+
+ 
+mymap <- lat.lng.df %>% leaflet() %>%
+   addTiles() %>%
+   addMarkers(popup=asulinks) %>%
+   addMarkers(lat=33.4218, lng=-111.9399,
+              icon=asuicon) %>%
+
+ addCircles(lng=cities$lng, lat=cities$lat, weight=1, 
+            radius=sqrt(cities$popul)*7) %>%
+ 
+ addMarkers(lng=cities$lng, lat=cities$lat,
+            popup=paste(cities$name, " <br>  pop: ",format(cities$population, 
+                        big.mark=",", big.interval=3L) ,sep=""),
+            icon=anglerIcon)
+
+mymap
+
+```
+
+***
+
+Next Slide 
+
+<p>Bla bla </p>
+
+<p style="color:red"> $Y = \beta_0 + \beta_1 X + \varepsilon$ </p>
